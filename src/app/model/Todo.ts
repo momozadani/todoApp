@@ -5,6 +5,6 @@ export class Todo {
     public task: string,
     public dueDate: number,
     public categorie: string,
-    public priority: string
+    public priority: number
   ) {}
 }

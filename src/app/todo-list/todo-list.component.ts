@@ -4,23 +4,31 @@ import { Todo } from "../model/Todo";
 import { DatePipe, AsyncPipe } from "@angular/common";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
-
+import { SideBarComponent } from "../side-bar/side-bar.component";
+import { PriorityComponent } from "../priority/priority.component";
 @Component({
   selector: "todo-list",
   standalone: true,
-  imports: [DatePipe, AsyncPipe, ReactiveFormsModule],
   templateUrl: "./todo-list.component.html",
   styleUrl: "./todo-list.component.scss",
+  imports: [
+    DatePipe,
+    AsyncPipe,
+    ReactiveFormsModule,
+    SideBarComponent,
+    PriorityComponent,
+  ],
 })
 export class TodoListComponent implements OnInit {
+  currentCategorie = "alle";
   todoList: Todo[] = [];
   filter = new FormGroup({
     searchFilterValue: new FormControl(""),
   });
   highlight: boolean = false;
-  constructor(public todo: TodoService) {}
+  constructor(public todoService: TodoService) {}
   ngOnInit(): void {
-    this.todoList = this.todo.allTodo;
+    this.todoList = this.todoService.getTodo();
     this.filter
       .get("searchFilterValue")
       ?.valueChanges.pipe(debounceTime(200), distinctUntilChanged())
@@ -34,7 +42,7 @@ export class TodoListComponent implements OnInit {
           });
           this.highlight = true;
         } else {
-          this.todoList = this.todo.allTodo;
+          this.todoList = this.todoService.getTodo();
           this.highlight = false;
         }
       });
@@ -46,8 +54,7 @@ export class TodoListComponent implements OnInit {
     return [item.categorie, item.task];
   }
   deleteItem(itemId: number) {
-    const index = this.todoList.findIndex((index) => index.id == itemId);
-    this.todoList.splice(index, 1);
+    this.todoList = this.todoService.deleteItem(itemId);
   }
   markItDone(itemId: number) {
     this.todoList = this.todoList.map((todo) => {
@@ -56,5 +63,15 @@ export class TodoListComponent implements OnInit {
       }
       return todo;
     });
+  }
+  checkValueCategorie(categorie: string) {
+    if (categorie == "alle") {
+      this.todoList = this.todoService.getTodo();
+    } else {
+      this.todoList = this.todoService.getTodo().filter((value) => {
+        return value.categorie == categorie;
+      });
+      this.currentCategorie = categorie;
+    }
   }
 }

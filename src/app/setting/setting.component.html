@@ -1,1 +1,39 @@
-<p>setting works!</p>
+<h1>Einstellung</h1>
+<form
+  [formGroup]="changeSetting"
+  (ngSubmit)="onSubmit(changeSetting)"
+  class="d-flex flex-column justify-content-center align-items-center"
+>
+  <div class="d-flex justify-content-center align-items-center">
+    <Caption class="mb-4">Todo-Liste</Caption>
+    <div class="ms-5 border-bottom border-primary">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="inlineRadio1"
+          value="sort"
+          formControlName="sort"
+        />
+        <label class="form-check-label" for="inlineRadio1">
+          Fetige todo nach unten verschieben</label
+        >
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="inlineRadio2"
+          value="delete"
+          formControlName="delete"
+        />
+        <label class="form-check-label" for="inlineRadio2"
+          >Löschen button anzeigen
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="w-25 d-flex justify-content-center mt-4">
+    <button type="submit" class="btn btn-primary w-25">speichern</button>
+  </div>
+</form>

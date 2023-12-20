@@ -7,22 +7,22 @@ import {
 } from "@angular/forms";
 import { TodoService } from "../todo-service";
 import { Todo } from "../model/Todo";
-
+import { PriorityComponent } from "../priority/priority.component";
 @Component({
   selector: "create-todo",
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, PriorityComponent],
   templateUrl: "./create-todo.component.html",
   styleUrl: "./create-todo.component.scss",
 })
 export class CreateTodoComponent {
   constructor(public todo: TodoService) {}
-  categories = ["Sports", "Music", "Movies", "Books"];
+  categories = ["finance", "schule", "house"];
   createTodo = new FormGroup({
-    title: new FormControl("someValue", [Validators.required]),
+    title: new FormControl("", [Validators.required]),
     dueDate: new FormControl(Date.now(), [Validators.required]),
-    category: new FormControl("House", [Validators.required]),
-    priorityValue: new FormControl("low", [Validators.required]),
+    category: new FormControl(""),
+    priorityValue: new FormControl(1, [Validators.required]),
   });
 
   onSubmit(
@@ -30,7 +30,7 @@ export class CreateTodoComponent {
       title: FormControl<string | null>;
       dueDate: FormControl<number | null>;
       category: FormControl<string | null>;
-      priorityValue: FormControl<string | null>;
+      priorityValue: FormControl<number | null>;
     }>
   ) {
     let maxValue = 1;
@@ -45,7 +45,7 @@ export class CreateTodoComponent {
           addTodo.value.title ?? "",
           addTodo.value.dueDate ?? Date.now(),
           addTodo.value.category ?? "Books",
-          addTodo.value.priorityValue ?? "low"
+          addTodo.value.priorityValue ?? 1
         )
       );
     }

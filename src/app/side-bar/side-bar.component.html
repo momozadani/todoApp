@@ -1,0 +1,17 @@
+@if(open) {
+<ul class="list-group">
+  @for(cat of categories; track $index) {
+  <a
+    class="list-group-item list-group-item-action list-group-item-dark"
+    [ngClass]="{ 'link-primary': cat === categorie }"
+    (click)="handleList(cat)"
+  >
+    {{ cat }}</a
+  >
+
+  }
+</ul>
+}
+<button class="btn btn-primary" (click)="toggleList()">
+  {{ open ? "close sideBar" : "open sideBar" }}
+</button>

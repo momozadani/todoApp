@@ -11,37 +11,37 @@
           <div class="form-check col">
             <label class="form-check-label" for="inlineRadio1">
               <input
-                class="form-check-input lowValue"
+                class="form-check-input"
                 type="radio"
                 id="inlineRadio1"
-                value="lowValue"
+                value="1"
                 formControlName="priorityValue"
               />
-              <i class="bi bi-star-fill"></i>
+              <priority [pr]="1"></priority>
             </label>
           </div>
           <div class="form-check col">
             <label class="form-check-label" for="inlineRadio2">
               <input
-                class="form-check-input mediumValue"
+                class="form-check-input"
                 type="radio"
                 id="inlineRadio2"
-                value="mediumValue"
+                value="2"
                 formControlName="priorityValue"
               />
-              <i class="bi bi-caret-up-fill"></i>
+              <priority [pr]="2"></priority>
             </label>
           </div>
           <div class="form-check col">
             <label class="form-check-label" for="inlineRadio3">
               <input
-                class="form-check-input highValue"
+                class="form-check-input"
                 type="radio"
                 id="inlineRadio3"
-                value="highValue"
+                value="3"
                 formControlName="priorityValue"
               />
-              <i class="bi bi-exclamation-circle-fill"></i>
+              <priority [pr]="3"></priority>
             </label>
           </div>
         </div>
@@ -67,8 +67,13 @@
     </div>
     <div class="form-group row">
       <label for="category" class="col col-form-label">Category</label>
-      <select class="col form-select" id="category" formControlName="category">
-        <option value="" disabled selected>Select a category</option>
+      <select
+        required
+        class="col form-select"
+        id="category"
+        formControlName="category"
+      >
+        <option value="" selected hidden>Choose a category</option>
         @for(category of categories;track $index){
         <option [value]="category">{{ category }}</option>
         }

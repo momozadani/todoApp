@@ -1,41 +1,56 @@
-<table class="table caption-top">
-  <caption>
-    <form [formGroup]="filter">
-      <div class="row">
-        <label for="filtering" class="col"><h2>TodoList</h2></label>
-        <div class="col d-flex">
-          <button class="btn btn-info" disabled>
-            <i class="bi bi-search"></i>
-          </button>
-          <input
-            id="filtering"
-            class="form-control"
-            type="text"
-            formControlName="searchFilterValue"
-          />
+<div class="row">
+  <div class="col-3">
+    <side-bar
+      [categorie]="currentCategorie"
+      (categorieChange)="checkValueCategorie($event)"
+    ></side-bar>
+  </div>
+  <table class="table caption-top col">
+    <caption>
+      <form [formGroup]="filter">
+        <div class="row">
+          <label for="filtering" class="col"><h2>TodoList</h2></label>
+          <div class="col d-flex">
+            <button class="btn btn-info" disabled>
+              <i class="bi bi-search"></i>
+            </button>
+            <input
+              id="filtering"
+              class="form-control"
+              type="text"
+              formControlName="searchFilterValue"
+            />
+          </div>
         </div>
-      </div>
-    </form>
-  </caption>
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Bezeichnung</th>
-      <th scope="col">Fällig bis</th>
-      <th scope="col">Kategorie</th>
-    </tr>
-  </thead>
-  <tbody [class]="{ 'table-success': highlight }">
-    @for (item of todoList; track item.id) {
-    <tr [class]="{ 'table-info': item.done }" (dblclick)="markItDone(item.id)">
-      <th scope="col">{{ item.id }}</th>
-      <td>{{ item.task }}</td>
-      <td>{{ item.dueDate | date : "dd.MM.yyyy" : "" : "" }}</td>
-      <td>{{ item.categorie }}</td>
-      <td class="todoListComponentDelete" (click)="deleteItem(item.id)">
-        <i class="bi bi-trash3-fill"></i>
-      </td>
-    </tr>
-    }
-  </tbody>
-</table>
+      </form>
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">ID</th>
+        <th scope="col">Bezeichnung</th>
+        <th scope="col">Fällig bis</th>
+        <th scope="col">Kategorie</th>
+      </tr>
+    </thead>
+    <tbody [class]="{ 'table-success': highlight }">
+      @for (item of todoList; track item.id) {
+      <tr
+        [class]="{ 'table-info': item.done }"
+        (dblclick)="markItDone(item.id)"
+      >
+        <th scope="col">
+          <priority [pr]="item.priority"></priority>
+        </th>
+        <td>{{ item.id }}</td>
+        <td>{{ item.task }}</td>
+        <td>{{ item.dueDate | date : "dd.MM.yyyy" : "" : "" }}</td>
+        <td>{{ item.categorie }}</td>
+        <td class="todoListComponentDelete" (click)="deleteItem(item.id)">
+          <i class="bi bi-trash3-fill"></i>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
