@@ -1,0 +1,79 @@
+<div class="d-flex justify-content-center">
+  <form
+    [formGroup]="createTodo"
+    (ngSubmit)="onSubmit(createTodo)"
+    class="row w-50 d-flex justify-content-center"
+  >
+    <div class="row border-bottom border-primary">
+      <h4 class="col">Todo anlegen</h4>
+      <div class="col d-flex justify-content-end">
+        <div class="row w-50">
+          <div class="form-check col">
+            <label class="form-check-label" for="inlineRadio1">
+              <input
+                class="form-check-input lowValue"
+                type="radio"
+                id="inlineRadio1"
+                value="lowValue"
+                formControlName="priorityValue"
+              />
+              <i class="bi bi-star-fill"></i>
+            </label>
+          </div>
+          <div class="form-check col">
+            <label class="form-check-label" for="inlineRadio2">
+              <input
+                class="form-check-input mediumValue"
+                type="radio"
+                id="inlineRadio2"
+                value="mediumValue"
+                formControlName="priorityValue"
+              />
+              <i class="bi bi-caret-up-fill"></i>
+            </label>
+          </div>
+          <div class="form-check col">
+            <label class="form-check-label" for="inlineRadio3">
+              <input
+                class="form-check-input highValue"
+                type="radio"
+                id="inlineRadio3"
+                value="highValue"
+                formControlName="priorityValue"
+              />
+              <i class="bi bi-exclamation-circle-fill"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row mt-3">
+      <label for="title" class="col col-form-label">Bezeichnung</label>
+      <input
+        class="form-control col"
+        id="title"
+        type="text"
+        formControlName="title"
+      />
+    </div>
+    <div class="form-group row m-3">
+      <label for="dueDate" class="col col-form-label">Fällig bis</label>
+      <input
+        class="form-control col"
+        id="dueDate"
+        type="date"
+        formControlName="dueDate"
+      />
+    </div>
+    <div class="form-group row">
+      <label for="category" class="col col-form-label">Category</label>
+      <select class="col form-select" id="category" formControlName="category">
+        <option value="" disabled selected>Select a category</option>
+        @for(category of categories;track $index){
+        <option [value]="category">{{ category }}</option>
+        }
+      </select>
+    </div>
+    <button type="submit" class="w-25 btn btn-primary m-5">Speichern</button>
+  </form>
+</div>
