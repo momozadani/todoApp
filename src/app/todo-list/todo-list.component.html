@@ -34,7 +34,7 @@
       </tr>
     </thead>
     <tbody [class]="{ 'table-success': highlight }">
-      @for (item of todoList; track item.id) {
+      @for (item of todoList | sortingByDone:sort ; track item.id) {
       <tr
         [class]="{ 'table-info': item.done }"
         (dblclick)="markItDone(item.id)"

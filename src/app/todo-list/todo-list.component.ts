@@ -6,6 +6,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { SideBarComponent } from "../side-bar/side-bar.component";
 import { PriorityComponent } from "../priority/priority.component";
+import { SortingByDonePipe } from "../sorting-by-done.pipe";
 @Component({
   selector: "todo-list",
   standalone: true,
@@ -17,6 +18,7 @@ import { PriorityComponent } from "../priority/priority.component";
     ReactiveFormsModule,
     SideBarComponent,
     PriorityComponent,
+    SortingByDonePipe,
   ],
 })
 export class TodoListComponent implements OnInit {
@@ -51,13 +53,6 @@ export class TodoListComponent implements OnInit {
     this.todoService.currentSettings.subscribe((settings) => {
       this.sort = settings.sort;
       this.delete = settings.delete;
-      if (this.sort) {
-        this.todoList.sort((itemA, itemB) => {
-          let a = itemA.done ? 1 : 0;
-          let b = itemB.done ? 1 : 0;
-          return a - b;
-        });
-      }
     });
   }
   searchFilter(item: Todo) {
@@ -78,13 +73,6 @@ export class TodoListComponent implements OnInit {
       this.todoService.saveTodoList();
       return todo;
     });
-    if (this.sort) {
-      this.todoList.sort((itemA, itemB) => {
-        let a = itemA.done ? 1 : 0;
-        let b = itemB.done ? 1 : 0;
-        return a - b;
-      });
-    }
   }
   checkValueCategorie(categorie: string) {
     if (categorie == "alle") {
