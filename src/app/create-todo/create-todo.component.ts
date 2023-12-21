@@ -22,7 +22,7 @@ export class CreateTodoComponent {
     title: new FormControl("", [Validators.required]),
     dueDate: new FormControl(Date.now(), [Validators.required]),
     category: new FormControl(""),
-    priorityValue: new FormControl(1, [Validators.required]),
+    priorityValue: new FormControl(0, [Validators.required]),
   });
 
   onSubmit(

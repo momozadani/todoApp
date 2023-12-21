@@ -21,6 +21,8 @@ import { PriorityComponent } from "../priority/priority.component";
 })
 export class TodoListComponent implements OnInit {
   currentCategorie = "alle";
+  sort!: boolean;
+  delete!: boolean;
   todoList: Todo[] = [];
   filter = new FormGroup({
     searchFilterValue: new FormControl(""),
@@ -46,6 +48,17 @@ export class TodoListComponent implements OnInit {
           this.highlight = false;
         }
       });
+    this.todoService.currentSettings.subscribe((settings) => {
+      this.sort = settings.sort;
+      this.delete = settings.delete;
+      if (this.sort) {
+        this.todoList.sort((itemA, itemB) => {
+          let a = itemA.done ? 1 : 0;
+          let b = itemB.done ? 1 : 0;
+          return a - b;
+        });
+      }
+    });
   }
   searchFilter(item: Todo) {
     if (!item) {
@@ -61,8 +74,17 @@ export class TodoListComponent implements OnInit {
       if (todo.id == itemId) {
         todo.done = !todo.done;
       }
+      this.todoService.allTodo = this.todoList;
+      this.todoService.saveTodoList();
       return todo;
     });
+    if (this.sort) {
+      this.todoList.sort((itemA, itemB) => {
+        let a = itemA.done ? 1 : 0;
+        let b = itemB.done ? 1 : 0;
+        return a - b;
+      });
+    }
   }
   checkValueCategorie(categorie: string) {
     if (categorie == "alle") {
